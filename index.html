@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projet Kanban</title>
+    
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body>
+
+    <div x-data="projetKanban()">
+
+        <header>
+            <h1>To-Do Liste Équipe</h1>
+        </header>
+
+        <hr>
+
+        <div>
+            <input type="text" placeholder="Rechercher une tâche...">
+        </div>
+
+        <br>
+
+        <div>
+            <h2>Nouvelle tâche</h2>
+            <input type="text" placeholder="Titre de la tâche...">
+            <button>  Ajouter  </button>
+        </div>
+
+        <hr>
+
+        <div>
+            <h3>À FAIRE (<span x-text="'0'"></span>)</h3>
+            
+            <div>
+                <h4>Faire le HTML</h4>
+                <p>Structure de base sans CSS</p>
+                <small>12/01/2024</small>
+                <button>   ✏️ Modifier   </button>
+                <button>   🗑️ Supprimer  </button>
+            </div>
+        </div>
+
+        <hr>
+
+        <div>
+            <h3>EN COURS (<span x-text="'0'"></span>)</h3>
+            </div>
+
+        <hr>
+
+        <div>
+            <h3>TERMINÉ (<span x-text="'0'"></span>)</h3>
+            </div>
+
+    </div>
+
+    <script>
+        function projetKanban() {
+            return {
+                // Membre 2 mettra son tableau ici
+            }
+        }
+    </script>
+</body>
+</html>
