@@ -6,12 +6,10 @@
     <title>Projet Kanban</title>
     
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    
-    <script src="app.js"></script>
 </head>
 <body>
 
-    <div x-data="gestionTaches">
+    <div x-data="projetKanban()">
 
         <header>
             <h1>To-Do Liste Équipe</h1>
@@ -27,13 +25,8 @@
 
         <div>
             <h2>Nouvelle tâche</h2>
-            
-            <input type="text" 
-                   x-model="nouvelleTache" 
-                   @keydown.enter="ajouterTache()"
-                   placeholder="Titre de la tâche...">
-            
-            <button @click="ajouterTache()">  Ajouter  </button>
+            <input type="text" placeholder="Titre de la tâche...">
+            <button>  Ajouter  </button>
         </div>
 
         <hr>
@@ -54,19 +47,22 @@
 
         <div>
             <h3>EN COURS (<span x-text="'0'"></span>)</h3>
-        </div>
+            </div>
 
         <hr>
 
         <div>
             <h3>TERMINÉ (<span x-text="'0'"></span>)</h3>
-        </div>
-
-        <hr>
-        
-        <pre x-text="JSON.stringify(taches, null, 2)"></pre>
+            </div>
 
     </div>
 
-    </body>
+    <script>
+        function projetKanban() {
+            return {
+                // Membre 2 mettra son tableau ici
+            }
+        }
+    </script>
+</body>
 </html>
