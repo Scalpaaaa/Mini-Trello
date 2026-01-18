@@ -1,0 +1,26 @@
+<!-- Barre de recherche -->
+<div>
+    <input 
+        type="text" 
+        x-model="searchQuery"
+        placeholder="Rechercher une tâche...">
+</div>
+
+<!-- Filtrage des tâches par statut -->
+<div>
+    <button @click="statusFilter = 'all'">
+        Toutes les tâches (<span x-text="taches.length"></span>)
+    </button>
+    
+    <button @click="statusFilter = 'todo'">
+        Tâches à faire (<span x-text="compterTaches('todo')"></span>)
+    </button>
+    
+    <button @click="statusFilter = 'in_progress'">
+        Tâches en cours (<span x-text="compterTaches('in_progress')"></span>)
+    </button>
+    
+    <button @click="statusFilter = 'done'">
+        Tâches terminées (<span x-text="compterTaches('done')"></span>)
+    </button>
+</div>
