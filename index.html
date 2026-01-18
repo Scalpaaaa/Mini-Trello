@@ -5,93 +5,177 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Projet Kanban</title>
     
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
+    
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-
     <script src="app.js"></script>
 </head>
-<body>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
 
-    <div x-data="gestionTaches">
+    <div x-data="gestionTaches" class="container mx-auto px-4 py-8 max-w-7xl">
 
-        <header>
-            <h1>To-Do Liste Équipe</h1>
+        <header class="text-center mb-8">
+            <h1 class="text-4xl font-bold text-gray-800 mb-2">To-Do Liste Équipe</h1>
+            <p class="text-gray-600">Gérez vos tâches efficacement</p>
         </header>
 
-        <hr>
+        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+            <div class="mb-6">
+                <input type="text" 
+                       placeholder="Rechercher une tâche..." 
+                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent input-focus">
+            </div>
 
-        <div>
-            <input type="text" placeholder="Rechercher une tâche...">
+            <div class="border-t pt-6">
+                <h2 class="text-xl font-semibold text-gray-700 mb-4">Nouvelle tâche</h2>
+                
+                <div class="flex gap-3">
+                    <input type="text" 
+                           x-model="nouvelleTache" 
+                           @keydown.enter="ajouterTache()"
+                           placeholder="Titre de la tâche..."
+                           class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent input-focus">
+                    
+                    <button @click="ajouterTache()" 
+                            class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200 font-medium btn-hover">
+                        Ajouter
+                    </button>
+                </div>
+            </div>
         </div>
 
-        <br>
-
-        <div>
-            <h2>Nouvelle tâche</h2>
+        <!-- Colonnes Kanban -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             
-            <input type="text" 
-                   x-model="nouvelleTache" 
-                   @keydown.enter="ajouterTache()"
-                   placeholder="Titre de la tâche...">
-            
-            <button @click="ajouterTache()">  Ajouter  </button>
-        </div>
+            <!-- Colonne À FAIRE -->
+            <div class="bg-white rounded-lg shadow-md p-6 kanban-column">
+                <h3 class="text-lg font-bold text-gray-800 mb-4 pb-2 border-b-2 border-red-400">
+                    À FAIRE 
+                    <span class="ml-2 px-2 py-1 bg-red-100 text-red-700 rounded-full text-sm" x-text="compterTaches('todo')"></span>
+                </h3>
+                
+                <div class="space-y-3">
+                    <template x-for="tache in taches.filter(t => t.statut === 'todo')" :key="tache.id">
+                        <div class="task-card bg-red-50 border-l-4 border-red-400 rounded-lg p-4 hover:shadow-md transition-shadow">
+                            <template x-if="tacheEnEdition !== tache.id">
+                                <div>
+                                    <strong class="text-gray-800 block mb-1" x-text="tache.titre"></strong>
+                                    <small class="text-gray-500 text-xs" x-text="tache.date"></small>
+                                    <div class="mt-3 flex flex-wrap gap-2">
+                                        <button @click="editerTache(tache)" 
+                                                class="px-3 py-1 bg-blue-500 text-white text-sm rounded hover:bg-blue-600 transition-colors btn-hover">
+                                            ✏️ Modifier
+                                        </button>
+                                        <button @click="supprimerTache(tache.id)" 
+                                                class="px-3 py-1 bg-red-500 text-white text-sm rounded hover:bg-red-600 transition-colors btn-hover">
+                                            🗑️ Supprimer
+                                        </button>
+                                        <button @click="tache.statut = 'doing'" 
+                                                class="px-3 py-1 bg-green-500 text-white text-sm rounded hover:bg-green-600 transition-colors btn-hover">
+                                            ➡️
+                                        </button>
+                                    </div>
+                                </div>
+                            </template>
 
-        <hr>
-
-        <div>
-            <h3>À FAIRE (<span x-text="compterTaches('todo')"></span>)</h3>
-            <template x-for="tache in taches.filter(t => t.statut === 'todo')" :key="tache.id">
-                <div>
-                    <template x-if="tacheEnEdition !== tache.id">
-                        <div>
-                            <strong x-text="tache.titre"></strong><br>
-                            <small x-text="tache.date"></small><br>
-                            <button @click="editerTache(tache)">✏️ Modifier</button>
-                            <button @click="supprimerTache(tache.id)">🗑️ Supprimer</button>
-                            <button @click="tache.statut = 'doing'">➡️</button>
-                        </div>
-                    </template>
-
-                    <template x-if="tacheEnEdition === tache.id">
-                        <div>
-                            <input type="text" x-model="nouveauTitre">
-                            <button @click="editerTache(tache)">✅ Valider</button>
-                            <button @click="tacheEnEdition = null">❌ Annuler</button>
+                            <template x-if="tacheEnEdition === tache.id">
+                                <div class="space-y-2">
+                                    <input type="text" 
+                                           x-model="nouveauTitre" 
+                                           class="w-full px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 input-focus">
+                                    <div class="flex gap-2">
+                                        <button @click="updateTache(tache)" 
+                                                class="px-3 py-1 bg-green-500 text-white text-sm rounded hover:bg-green-600 transition-colors btn-hover">
+                                            ✅ Valider
+                                        </button>
+                                        <button @click="tacheEnEdition = null" 
+                                                class="px-3 py-1 bg-gray-500 text-white text-sm rounded hover:bg-gray-600 transition-colors btn-hover">
+                                            ❌ Annuler
+                                        </button>
+                                    </div>
+                                </div>
+                            </template>
                         </div>
                     </template>
                 </div>
-            </template>
-        </div>
-            
-        <div>
-            <h3>EN COURS (<span x-text="compterTaches('doing')"></span>)</h3>
-            <template x-for="tache in taches.filter(t => t.statut === 'doing')" :key="tache.id">
-                <div>
-                    <template x-if="tacheEnEdition !== tache.id">
-                        <div>
-                            <strong x-text="tache.titre"></strong><br>
-                            <button @click="tache.statut = 'todo'">⬅️</button>
-                            <button @click="editerTache(tache)">✏️</button>
-                            <button @click="supprimerTache(tache.id)">🗑️</button>
-                            <button @click="tache.statut = 'done'">➡️</button>
+            </div>
+                
+            <!-- Colonne EN COURS -->
+            <div class="bg-white rounded-lg shadow-md p-6 kanban-column">
+                <h3 class="text-lg font-bold text-gray-800 mb-4 pb-2 border-b-2 border-yellow-400">
+                    EN COURS 
+                    <span class="ml-2 px-2 py-1 bg-yellow-100 text-yellow-700 rounded-full text-sm" x-text="compterTaches('doing')"></span>
+                </h3>
+                
+                <div class="space-y-3">
+                    <template x-for="tache in taches.filter(t => t.statut === 'doing')" :key="tache.id">
+                        <div class="task-card bg-yellow-50 border-l-4 border-yellow-400 rounded-lg p-4 hover:shadow-md transition-shadow">
+                            <template x-if="tacheEnEdition !== tache.id">
+                                <div>
+                                    <strong class="text-gray-800 block mb-3" x-text="tache.titre"></strong>
+                                    <div class="flex flex-wrap gap-2">
+                                        <button @click="tache.statut = 'todo'" 
+                                                class="px-3 py-1 bg-gray-500 text-white text-sm rounded hover:bg-gray-600 transition-colors btn-hover">
+                                            ⬅️
+                                        </button>
+                                        <button @click="editerTache(tache)" 
+                                                class="px-3 py-1 bg-blue-500 text-white text-sm rounded hover:bg-blue-600 transition-colors btn-hover">
+                                            ✏️
+                                        </button>
+                                        <button @click="supprimerTache(tache.id)" 
+                                                class="px-3 py-1 bg-red-500 text-white text-sm rounded hover:bg-red-600 transition-colors btn-hover">
+                                            🗑️
+                                        </button>
+                                        <button @click="tache.statut = 'done'" 
+                                                class="px-3 py-1 bg-green-500 text-white text-sm rounded hover:bg-green-600 transition-colors btn-hover">
+                                            ➡️
+                                        </button>
+                                    </div>
+                                </div>
+                            </template>
+                            <template x-if="tacheEnEdition === tache.id">
+                                <div>
+                                    <input type="text" 
+                                           x-model="nouveauTitre" 
+                                           @keydown.enter="updateTache(tache)"
+                                           class="w-full px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 input-focus mb-2">
+                                    <button @click="updateTache(tache)" 
+                                            class="px-3 py-1 bg-green-500 text-white text-sm rounded hover:bg-green-600 transition-colors btn-hover">
+                                        ✅ Valider
+                                    </button>
+                                </div>
+                            </template>
                         </div>
                     </template>
-                    <template x-if="tacheEnEdition === tache.id">
-                        <input type="text" x-model="nouveauTitre" @keydown.enter="updateTache(tache)">
+                </div>
+            </div>
+
+            <!-- Colonne TERMINÉ -->
+            <div class="bg-white rounded-lg shadow-md p-6 kanban-column">
+                <h3 class="text-lg font-bold text-gray-800 mb-4 pb-2 border-b-2 border-green-400">
+                    TERMINÉ 
+                    <span class="ml-2 px-2 py-1 bg-green-100 text-green-700 rounded-full text-sm" x-text="compterTaches('done')"></span>
+                </h3>
+                
+                <div class="space-y-3">
+                    <template x-for="tache in taches.filter(t => t.statut === 'done')" :key="tache.id">
+                        <div class="task-card bg-green-50 border-l-4 border-green-400 rounded-lg p-4 hover:shadow-md transition-shadow">
+                            <span class="text-gray-700 block mb-3 line-through" x-text="tache.titre"></span>
+                            <div class="flex gap-2">
+                                <button @click="tache.statut = 'doing'" 
+                                        class="px-3 py-1 bg-gray-500 text-white text-sm rounded hover:bg-gray-600 transition-colors btn-hover">
+                                    ⬅️
+                                </button>
+                                <button @click="supprimerTache(tache.id)" 
+                                        class="px-3 py-1 bg-red-500 text-white text-sm rounded hover:bg-red-600 transition-colors btn-hover">
+                                    🗑️
+                                </button>
+                            </div>
+                        </div>
                     </template>
                 </div>
-            </template>
-        </div>
-
-        <div>
-            <h3>TERMINÉ (<span x-text="compterTaches('done')"></span>)</h3>
-            <template x-for="tache in taches.filter(t => t.statut === 'done')" :key="tache.id">
-                <div>
-                    <span x-text="tache.titre"></span>
-                    <button @click="tache.statut = 'doing'">⬅️</button>
-                    <button @click="supprimerTache(tache.id)">🗑️</button>
-                </div>
-            </template>
+            </div>
         </div>
 
         <!-- <hr>
