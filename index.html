@@ -39,32 +39,64 @@
         <hr>
 
         <div>
-            <h3>À FAIRE (<span x-text="'0'"></span>)</h3>
+            <h3>À FAIRE (<span x-text="compterTaches('todo')"></span>)</h3>
+            <template x-for="tache in taches.filter(t => t.statut === 'todo')" :key="tache.id">
+                <div>
+                    <template x-if="tacheEnEdition !== tache.id">
+                        <div>
+                            <strong x-text="tache.titre"></strong><br>
+                            <small x-text="tache.date"></small><br>
+                            <button @click="editerTache(tache)">✏️ Modifier</button>
+                            <button @click="supprimerTache(tache.id)">🗑️ Supprimer</button>
+                            <button @click="tache.statut = 'doing'">➡️</button>
+                        </div>
+                    </template>
+
+                    <template x-if="tacheEnEdition === tache.id">
+                        <div>
+                            <input type="text" x-model="nouveauTitre">
+                            <button @click="editerTache(tache)">✅ Valider</button>
+                            <button @click="tacheEnEdition = null">❌ Annuler</button>
+                        </div>
+                    </template>
+                </div>
+            </template>
+        </div>
             
-            <div>
-                <h4>Faire le HTML</h4>
-                <p>Structure de base sans CSS</p>
-                <small>12/01/2024</small>
-                <button>   ✏️ Modifier   </button>
-                <button>   🗑️ Supprimer  </button>
-            </div>
+        <div>
+            <h3>EN COURS (<span x-text="compterTaches('doing')"></span>)</h3>
+            <template x-for="tache in taches.filter(t => t.statut === 'doing')" :key="tache.id">
+                <div>
+                    <template x-if="tacheEnEdition !== tache.id">
+                        <div>
+                            <strong x-text="tache.titre"></strong><br>
+                            <button @click="tache.statut = 'todo'">⬅️</button>
+                            <button @click="editerTache(tache)">✏️</button>
+                            <button @click="supprimerTache(tache.id)">🗑️</button>
+                            <button @click="tache.statut = 'done'">➡️</button>
+                        </div>
+                    </template>
+                    <template x-if="tacheEnEdition === tache.id">
+                        <input type="text" x-model="nouveauTitre" @keydown.enter="updateTache(tache)">
+                    </template>
+                </div>
+            </template>
         </div>
-
-        <hr>
 
         <div>
-            <h3>EN COURS (<span x-text="'0'"></span>)</h3>
+            <h3>TERMINÉ (<span x-text="compterTaches('done')"></span>)</h3>
+            <template x-for="tache in taches.filter(t => t.statut === 'done')" :key="tache.id">
+                <div>
+                    <span x-text="tache.titre"></span>
+                    <button @click="tache.statut = 'doing'">⬅️</button>
+                    <button @click="supprimerTache(tache.id)">🗑️</button>
+                </div>
+            </template>
         </div>
 
-        <hr>
-
-        <div>
-            <h3>TERMINÉ (<span x-text="'0'"></span>)</h3>
-        </div>
-
-        <hr>
+        <!-- <hr>
         
-        <pre x-text="JSON.stringify(taches, null, 2)"></pre>
+        <pre x-text="JSON.stringify(taches, null, 2)"></pre> -->
 
     </div>
 
