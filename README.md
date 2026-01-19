@@ -17,6 +17,7 @@ Projet final du module Alpine JS consistant à reproduire en frontend un outil K
 
 **TOURE Faetem** : 
 - Fonctionnalités de changement de statut, modification, mise à jour et de suppression des tâches. 
+- Rédaction du README.
 
 _Capture d'écran_
 ![Page principale](/images/mini-trello-ss.png "Page principale de l'app")
