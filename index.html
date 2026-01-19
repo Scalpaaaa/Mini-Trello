@@ -14,36 +14,29 @@
 <body>
 
     <div x-data="gestionTaches">
-    <div x-data="gestionTaches">
 
         <header class="text-center mb-8">
             <h1 class="text-4xl font-bold text-gray-800 mb-2">Mini-Trello</h1>
             <p class="text-gray-600 italic">Gérez vos tâches efficacement</p>
         </header>
 
-        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
-            <div class="mb-6">
-                <input type="text" 
-                       placeholder="Rechercher une tâche..." 
-                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent input-focus">
-            </div>
+        <hr>
 
-            <div class="border-t pt-6">
-                <h2 class="text-xl font-semibold text-gray-700 mb-4">Nouvelle tâche</h2>
-                
-                <div class="flex gap-3">
-                    <input type="text" 
-                           x-model="nouvelleTache" 
-                           @keydown.enter="ajouterTache()"
-                           placeholder="Titre de la tâche..."
-                           class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent input-focus">
-                    
-                    <button @click="ajouterTache()" 
-                            class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200 font-medium btn-hover">
-                        Ajouter
-                    </button>
-                </div>
-            </div>
+        <div>
+            <input type="text" placeholder="Rechercher une tâche...">
+        </div>
+
+        <br>
+
+        <div>
+            <h2>Nouvelle tâche</h2>
+            
+            <input type="text" 
+                   x-model="nouvelleTache" 
+                   @keydown.enter="ajouterTache()"
+                   placeholder="Titre de la tâche...">
+            
+            <button @click="ajouterTache()">  Ajouter  </button>
         </div>
 
         <!-- Colonnes Kanban -->
