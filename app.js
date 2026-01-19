@@ -8,6 +8,8 @@ document.addEventListener('alpine:init', () => {
         taches: [],        // tableau principal qui contient tout
         tacheEnEdition: null, 
         nouveauTitre: '',
+        searchQuery: '',
+        statusFilter: 'all',
 
          
         init() {
@@ -22,6 +24,27 @@ document.addEventListener('alpine:init', () => {
             this.$watch('taches', (valeur) => {
                 localStorage.setItem('mesTaches', JSON.stringify(valeur));
             }, { deep: true }); // deep: true est essentiel pour surveiller les modifs internes aux objets);
+        },
+
+        // Filtration par recherche et statut
+        get tachesFiltrees() {
+            let filtered = this.taches;
+
+            if (this.searchQuery !== '') {
+                filtered = filtered.filter(tache => 
+                    tache.titre.toLowerCase().includes(this.searchQuery.toLowerCase())
+                );
+            }
+
+            if (this.statusFilter !== 'all') {
+                filtered = filtered.filter(tache => tache.statut === this.statusFilter);
+            }
+
+            return filtered;
+        },
+
+        obtenirTachesParStatut(statut) {
+            return this.tachesFiltrees.filter(tache => tache.statut === statut);
         },
 
         
@@ -61,6 +84,10 @@ document.addEventListener('alpine:init', () => {
         // Petite fonction utilitaire pour compter les tâches par colonne
         compterTaches(statut) {
             return this.taches.filter(t => t.statut === statut).length;
-        }
+        },
+
+        compterTachesFiltre(statut) {
+            return this.obtenirTachesParStatut(statut).length;
+        },
     }))
 });
