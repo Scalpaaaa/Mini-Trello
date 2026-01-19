@@ -1,5 +1,4 @@
-/* Style simple pour les boutons de filtre */
-.filter-btn {
+.statusFilter {
     background: #f3f4f6;
     color: #222;
     border: none;
@@ -10,10 +9,10 @@
     font-size: 1em;
     transition: background 0.2s, color 0.2s;
 }
-.filter-btn:hover {
+.statusFilter:hover {
     background: #e5e7eb;
 }
-.filter-btn.active {
+.statusFilter.active {
     background: #2563eb;
     color: #fff;
 }
