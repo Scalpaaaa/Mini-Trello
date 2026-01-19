@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Projet Kanban</title>
+    <title>Mini-Trello</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="styles.css">
@@ -168,11 +168,11 @@
                                         </button>
                                         <button @click="editerTache(tache)" 
                                                 class="px-3 py-1 bg-blue-500 text-white text-sm rounded hover:bg-blue-600 transition-colors btn-hover">
-                                            ✏️
+                                            Modifier
                                         </button>
                                         <button @click="supprimerTache(tache.id)" 
                                                 class="px-3 py-1 bg-red-500 text-white text-sm rounded hover:bg-red-600 transition-colors btn-hover">
-                                            🗑️
+                                            Supprimer
                                         </button>
                                         <button @click="tache.statut = 'done'" 
                                                 class="px-3 py-1 bg-green-500 text-white text-sm rounded hover:bg-green-600 transition-colors btn-hover">
