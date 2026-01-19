@@ -20,4 +20,3 @@ Projet final du module Alpine JS consistant à reproduire en frontend un outil K
 
 _Capture d'écran_
 ![Page principale](/images/mini-trello-ss.png "Page principale de l'app")
-
