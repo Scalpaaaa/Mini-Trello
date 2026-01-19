@@ -57,19 +57,19 @@
 
             <!-- Filtrage des tâches par statut -->
             <div>
-                <button @click="statusFilter = 'all'">
+                <button class="statusFilter" :class="{'active': statusFilter === 'all'}" @click="statusFilter = 'all'">
                     Toutes les tâches (<span x-text="taches.length"></span>)
                 </button>
                 
-                <button @click="statusFilter = 'todo'">
+                <button class="statusFilter" :class="{'active': statusFilter === 'todo'}" @click="statusFilter = 'todo'">
                     Tâches à faire (<span x-text="compterTaches('todo')"></span>)
                 </button>
                 
-                <button @click="statusFilter = 'doing'">
+                <button class="statusFilter" :class="{'active': statusFilter === 'doing'}" @click="statusFilter = 'doing'">
                     Tâches en cours (<span x-text="compterTaches('doing')"></span>)
                 </button>
                 
-                <button @click="statusFilter = 'done'">
+                <button class="statusFilter" :class="{'active': statusFilter === 'done'}" @click="statusFilter = 'done'">
                     Tâches terminées (<span x-text="compterTaches('done')"></span>)
                 </button>
             </div>
