@@ -1,0 +1,31 @@
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.task-card {
+    animation: slideIn 0.3s ease-out;
+}
+
+.kanban-column {
+    min-height: 400px;
+}
+
+.btn-hover:hover {
+    transform: scale(1.05);
+    transition: transform 0.2s ease;
+}
+
+.input-focus:focus {
+    outline: none;
+}
+
+.status-transition {
+    transition: all 0.3s ease;
+}
