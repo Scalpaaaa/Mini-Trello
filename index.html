@@ -7,10 +7,13 @@
     
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
+
     <script src="app.js"></script>
 </head>
 <body>
+<body>
 
+    <div x-data="gestionTaches">
     <div x-data="gestionTaches">
 
         <header class="text-center mb-8">
@@ -23,7 +26,23 @@
         <div>
             <input type="text" placeholder="Rechercher une tâche...">
         </div>
+        <hr>
 
+        <div>
+            <input type="text" placeholder="Rechercher une tâche...">
+        </div>
+
+        <br>
+
+        <div>
+            <h2>Nouvelle tâche</h2>
+            
+            <input type="text" 
+                   x-model="nouvelleTache" 
+                   @keydown.enter="ajouterTache()"
+                   placeholder="Titre de la tâche...">
+            
+            <button @click="ajouterTache()">  Ajouter  </button>
         <br>
 
         <div>
@@ -143,6 +162,8 @@
                 </div>
             </template>
         </div>
+            </template>
+        </div>
 
             <!-- Colonne TERMINÉ -->
             <div class="bg-white rounded-lg shadow-md p-6 kanban-column">
@@ -168,6 +189,7 @@
                         </div>
                     </template>
                 </div>
+            </template>
             </template>
         </div>
 
