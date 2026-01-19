@@ -21,29 +21,12 @@
             <p class="text-gray-600 italic">Gérez vos tâches efficacement</p>
         </header>
 
-        <hr>
-
-        <div>
-            <input type="text" placeholder="Rechercher une tâche...">
-        </div>
-        <hr>
-
-        <div>
-            <input type="text" placeholder="Rechercher une tâche...">
-        </div>
-
-        <br>
-
-        <div>
-            <h2>Nouvelle tâche</h2>
-            
-            <input type="text" 
-                   x-model="nouvelleTache" 
-                   @keydown.enter="ajouterTache()"
-                   placeholder="Titre de la tâche...">
-            
-            <button @click="ajouterTache()">  Ajouter  </button>
-        <br>
+        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+            <div class="mb-6">
+                <input type="text" 
+                       placeholder="Rechercher une tâche..." 
+                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent input-focus">
+            </div>
 
         <div>
             <h2>Nouvelle tâche</h2>
