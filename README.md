@@ -4,18 +4,18 @@ Projet final du module Alpine JS consistant à reproduire en frontend un outil K
 
 ## Répartition des tâches 
 
-CHEN Pascal : 
+**CHEN Pascal** : 
 - Initialisation du projet en créant la structure de l'index.html. 
 - Stylisation de toutes les balises en TailwindCSS. 
 
-DE Poukn Samuel :
+**DE Poukn Samuel** :
 - Mise en place de la structure des données 
 - Fonctionnalité d'ajout de tâches
 
-TEIXEIRA Paulo : 
+**TEIXEIRA Paulo** : 
 - Fonctionnalités de recherche et filtrage des tâches 
 
-TOURE Faetem : 
+**TOURE Faetem** : 
 - Fonctionnalités de changement de statut et modification, de mise à jour et de suppression des tâches. 
 
 _Capture d'écran_
